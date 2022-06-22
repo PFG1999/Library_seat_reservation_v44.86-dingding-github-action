@@ -1,0 +1,39 @@
+name: Library_seat_reservation
+
+on:
+  workflow_dispatch:
+  # push:
+  #   branches: [ main ]
+  
+#  schedule:
+#  # Github Action 使用世界标准时间（UTC），北京时间（UTC+8）转换为世界标准时需要减去8小时
+#    - cron:  '30 4 * * *' # 默认在每天 UTC 04:30 （北京时间 12:30）执行
+
+jobs:
+  USER_01:
+    runs-on: ubuntu-latest
+    # 如果严格按照README中教程操作，且没有多账户/多地点打卡需要，请将下行代码中的02改成01
+    environment: Library_CONFIG # 填写需要使用的用户配置对应的环境,请自行根据实际情况修改
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    - name: Import cache
+      uses: actions/cache@v2
+      with:
+        path: .cache
+        key: ${{ secrets.CACHE_NAME }}-${{ github.run_id }}
+        restore-keys: ${{ secrets.CACHE_NAME }}-
+    - name: Run script
+      env:
+        DD_BOT_ACCESS_TOKEN: ${{secrets.DD_BOT_ACCESS_TOKEN}}
+        DD_BOT_SECRET: ${{secrets.DD_BOT_SECRET}}
+        Library_USERNAME: ${{secrets.USERNAME}}
+        Library_PASSWORD: ${{secrets.PASSWORD}}
+      run: python main.py

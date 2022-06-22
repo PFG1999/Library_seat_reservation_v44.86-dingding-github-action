@@ -17,7 +17,7 @@ import base64
 
 USERNAME=os.environ["Library_USERNAME"] #账号-->学号
 PASSWORD=os.environ["Library_PASSWORD"] #密码
-AREA_ID=[14,15] #想要预约的房间编号，默认是8、10，若想添加其他的，可以先运行脚本，会显示出其他房间的编号，再自行添加或者更改，同时越靠前越优先考虑
+AREA_ID=[10,16] #想要预约的房间编号，默认是8、10，若想添加其他的，可以先运行脚本，会显示出其他房间的编号，再自行添加或者更改，同时越靠前越优先考虑
 DD_BOT_ACCESS_TOKEN = os.environ["DD_BOT_ACCESS_TOKEN"]
 DD_BOT_SECRET = os.environ["DD_BOT_SECRET"]
 
